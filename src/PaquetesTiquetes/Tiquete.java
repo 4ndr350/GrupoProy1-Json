@@ -12,7 +12,6 @@ public class Tiquete {
 
 	public Tiquete(String idTiquete, String asiento, String tipo, Date fecha,
 			String hora) {
-		super();
 		this.idTiquete = idTiquete;
 		this.asiento = asiento;
 		this.tipo = tipo;
@@ -22,7 +21,6 @@ public class Tiquete {
 
 
 	public Tiquete(String idTiquete, String tipo, Date fecha, String hora) {
-		super();
 		this.idTiquete = idTiquete;
 		this.tipo = tipo;
 		this.fecha = fecha;
@@ -33,3 +31,5 @@ public class Tiquete {
 	
 
 }
+
+

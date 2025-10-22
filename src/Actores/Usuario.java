@@ -1,8 +1,12 @@
 package Actores;
 
+/**
+ * Usuario base del sistema (abstracto).
+ * Contiene credenciales, datos de contacto y saldo virtual.
+ */
 public abstract class Usuario {
     // Atributos
-    private String id;
+    private final String id;
     private String login;
     private String passwordHash;
     private String nombre;
@@ -10,11 +14,16 @@ public abstract class Usuario {
     private double saldoVirtual;
 
     /**
-     * Constructor de Usuario
+     * Constructor de Usuario.
+     * Requiere id, login y password no nulos/ni vacíos.
      */
     public Usuario(String id, String login, String password, String nombre, String correo) {
-        this.id = id;
-        this.login = login;
+        if (id == null || id.trim().isEmpty()) throw new IllegalArgumentException("id obligatorio");
+        if (login == null || login.trim().isEmpty()) throw new IllegalArgumentException("login obligatorio");
+        if (password == null || password.isEmpty()) throw new IllegalArgumentException("password obligatoria");
+
+        this.id = id.trim();
+        this.login = login.trim();
         this.passwordHash = hashPassword(password);
         this.nombre = nombre;
         this.correo = correo;
@@ -22,57 +31,84 @@ public abstract class Usuario {
     }
 
     /**
-     * Autentica al usuario verificando la contrase�a
-     * @param passwordPlano contrase�a en texto plano
-     * @return true si la autenticaci�n es exitosa
+     * Autentica al usuario verificando la contraseña.
      */
     public boolean autenticar(String passwordPlano) {
+        if (passwordPlano == null) return false;
         return this.passwordHash.equals(hashPassword(passwordPlano));
     }
 
     /**
-     * Acredita un monto al saldo virtual del usuario
-     * Usado para reembolsos o recargas
-     * @param monto cantidad a acreditar
+     * Cambia la contraseña validando la actual.
+     */
+    public boolean cambiarPassword(String passwordActual, String passwordNueva) {
+        if (!autenticar(passwordActual)) {
+            System.out.println("Contraseña actual incorrecta");
+            return false;
+        }
+        if (passwordNueva == null || passwordNueva.length() < 4) {
+            System.out.println("La nueva contraseña debe tener al menos 4 caracteres");
+            return false;
+        }
+        this.passwordHash = hashPassword(passwordNueva);
+        System.out.println("Contraseña actualizada correctamente");
+        return true;
+    }
+
+    /**
+     * Acredita un monto al saldo virtual del usuario (reembolsos o recargas).
      */
     public void acreditarSaldo(double monto) {
-        if (monto > 0) {
-            this.saldoVirtual += monto;
-            System.out.println("Saldo acreditado: $" + monto + ". Nuevo saldo: $" + this.saldoVirtual);
+        if (monto <= 0) {
+            System.out.println("El monto a acreditar debe ser positivo");
+            return;
         }
+        this.saldoVirtual += monto;
+        System.out.println("Saldo acreditado: $" + String.format("%.2f", monto) +
+                ". Nuevo saldo: $" + String.format("%.2f", this.saldoVirtual));
     }
 
     /**
-     * Debita un monto del saldo virtual del usuario
-     * Usado para pagos con saldo virtual
-     * @param monto cantidad a debitar
-     * @return true si el d�bito fue exitoso, false si no hay saldo suficiente
+     * Debita un monto del saldo virtual del usuario (pagos con saldo virtual).
      */
     public boolean debitarSaldo(double monto) {
-        if (monto > 0 && this.saldoVirtual >= monto) {
-            this.saldoVirtual -= monto;
-            System.out.println("Saldo debitado: $" + monto + ". Saldo restante: $" + this.saldoVirtual);
-            return true;
+        if (monto <= 0) {
+            System.out.println("El monto a debitar debe ser positivo");
+            return false;
         }
-        System.out.println("Saldo insuficiente. Saldo actual: $" + this.saldoVirtual);
-        return false;
+        if (this.saldoVirtual < monto) {
+            System.out.println("Saldo insuficiente. Saldo actual: $" + String.format("%.2f", this.saldoVirtual));
+            return false;
+        }
+        this.saldoVirtual -= monto;
+        System.out.println("Saldo debitado: $" + String.format("%.2f", monto) +
+                ". Saldo restante: $" + String.format("%.2f", this.saldoVirtual));
+        return true;
     }
 
     /**
-     * M�todo simple de hash para contrase�as
-     * NOTA: En producci�n usar BCrypt, Argon2 o similar
+     * Método simple de hash para contraseñas.
+     * NOTA: En producción usar BCrypt, Argon2 o similar.
      */
     private String hashPassword(String password) {
         return Integer.toString(password.hashCode());
     }
 
-    // Getters y Setters
+    // Getters y Setters controlados
     public String getId() {
         return id;
     }
 
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String nuevoLogin) {
+        if (nuevoLogin == null || nuevoLogin.trim().isEmpty()) {
+            System.out.println("Login inválido");
+            return;
+        }
+        this.login = nuevoLogin.trim();
     }
 
     public String getNombre() {
@@ -102,7 +138,7 @@ public abstract class Usuario {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Usuario)) return false;
         Usuario usuario = (Usuario) o;
         return id.equals(usuario.id);
     }

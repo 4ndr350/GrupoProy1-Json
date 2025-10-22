@@ -3,7 +3,7 @@ package ZonasMaster;
 import java.time.LocalDateTime;
 
 /**
- * Representa un per�odo de tiempo con fecha/hora de inicio y fin
+ * Representa un perÃ­odo de tiempo con fecha/hora de inicio y fin
  * Usado para ofertas y reportes con rango de fechas
  */
 public class VentanaTiempo {
@@ -19,17 +19,17 @@ public class VentanaTiempo {
     }
 
     /**
-     * Verifica si una fecha est� dentro de la ventana
+     * Verifica si una fecha estÃ¡ dentro de la ventana
      * @param fecha fecha a verificar
-     * @return true si la fecha est� dentro del rango
+     * @return true si la fecha estÃ¡ dentro del rango
      */
     public boolean incluye(LocalDateTime fecha) {
         return !fecha.isBefore(inicio) && !fecha.isAfter(fin);
     }
 
     /**
-     * Verifica si la ventana est� activa en este momento
-     * @return true si la fecha/hora actual est� dentro de la ventana
+     * Verifica si la ventana estÃ¡ activa en este momento
+     * @return true si la fecha/hora actual estÃ¡ dentro de la ventana
      */
     public boolean estaActiva() {
         LocalDateTime ahora = LocalDateTime.now();
@@ -61,3 +61,4 @@ public class VentanaTiempo {
                 '}';
     }
 }
+
