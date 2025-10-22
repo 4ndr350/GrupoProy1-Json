@@ -5,10 +5,14 @@ import ZonasMaster.Evento;
 /**
  * Totales de la tiquetera para un evento especifico.
  * Ingresos brutos = cargos de servicio + costos de emision.
+ * Totales de la tiquetera para un evento especifico.
+ * Ingresos brutos = cargos de servicio + costos de emision.
  */
 public class TotalPorEvento {
     private final Evento evento;
+    private final Evento evento;
     private int boletosVendidos;
+    private double ingresosBrutos;
     private double ingresosBrutos;
 
     public TotalPorEvento(Evento evento) {
@@ -33,10 +37,16 @@ public class TotalPorEvento {
     public void setBoletosVendidos(int boletosVendidos) { this.boletosVendidos = boletosVendidos; }
     public double getIngresosBrutos() { return ingresosBrutos; }
     public void setIngresosBrutos(double ingresosBrutos) { this.ingresosBrutos = ingresosBrutos; }
+    public Evento getEvento() { return evento; }
+    public int getBoletosVendidos() { return boletosVendidos; }
+    public void setBoletosVendidos(int boletosVendidos) { this.boletosVendidos = boletosVendidos; }
+    public double getIngresosBrutos() { return ingresosBrutos; }
+    public void setIngresosBrutos(double ingresosBrutos) { this.ingresosBrutos = ingresosBrutos; }
 
     @Override
     public String toString() {
         return "TotalPorEvento{" +
+                "evento=" + (evento != null ? evento.getNombre() : "-") +
                 "evento=" + (evento != null ? evento.getNombre() : "-") +
                 ", boletosVendidos=" + boletosVendidos +
                 ", ingresosBrutos=$" + String.format("%.2f", ingresosBrutos) +

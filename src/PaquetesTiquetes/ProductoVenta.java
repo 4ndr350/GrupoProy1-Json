@@ -3,7 +3,7 @@ package PaquetesTiquetes;
 import java.util.List;
 
 /**
- * Abstracción de un producto vendible en la plataforma.
+ * Abstracciï¿½n de un producto vendible en la plataforma.
  * Puede ser un tiquete simple o un paquete de varios tiquetes.
  */
 public interface ProductoVenta {
@@ -13,7 +13,7 @@ public interface ProductoVenta {
 
     /**
      * Genera los tiquetes que componen este producto.
-     * Nota: La generación se hace sin validar inventario/aforo.
+     * Nota: La generaciï¿½n se hace sin validar inventario/aforo.
      */
     List<Tiquete> generarTiquetes();
 }

@@ -2,6 +2,8 @@ package PaquetesTiquetes;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Paquete implements ProductoVenta {
     public Boolean transferible;

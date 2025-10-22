@@ -1,7 +1,7 @@
 package Actores;
 
 /**
- * Regla de cargo por servicio según el tipo de evento.
+ * Regla de cargo por servicio segÃºn el tipo de evento.
  * El administrador define estas reglas para cada tipo de evento.
  */
 public class CargoServicio {

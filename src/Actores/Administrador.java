@@ -29,7 +29,7 @@ public class Administrador extends Usuario {
      */
     public void fijarCargoServicio(String tipo, double porcentaje) {
         if (tipo == null || tipo.trim().isEmpty()) {
-            System.out.println("Tipo de evento inválido");
+            System.out.println("Tipo de evento invÃ¡lido");
             return;
         }
         String tipoNorm = tipo.trim().toUpperCase();
@@ -52,19 +52,19 @@ public class Administrador extends Usuario {
      */
     public void fijarCostoFijoEmision(double monto) {
         if (monto < 0) {
-            System.out.println("El costo fijo de emisión no puede ser negativo");
+            System.out.println("El costo fijo de emisiÃ³n no puede ser negativo");
             return;
         }
         this.costoFijoEmision = monto;
-        System.out.println("Costo de emisión actualizado: $" + monto);
+        System.out.println("Costo de emisiÃ³n actualizado: $" + monto);
     }
 
     /**
-     * Aprueba un venue sugerido por un organizador si cumple validaciones básicas.
+     * Aprueba un venue sugerido por un organizador si cumple validaciones bÃ¡sicas.
      */
     public void aprobarVenue(Venue venue) {
         if (venue == null) {
-            System.out.println("Venue inválido");
+            System.out.println("Venue invÃ¡lido");
             return;
         }
         if (venue.getNombre() == null || venue.getNombre().trim().isEmpty()) {
@@ -72,7 +72,7 @@ public class Administrador extends Usuario {
             return;
         }
         if (venue.getCapacidadMaxima() <= 0) {
-            System.out.println("Capacidad máxima inválida para el venue");
+            System.out.println("Capacidad mÃ¡xima invÃ¡lida para el venue");
             return;
         }
         venue.aprobar();
@@ -80,29 +80,29 @@ public class Administrador extends Usuario {
 
     /**
      * Cancela un evento por fraude.
-     * Política: reembolsa precio pagado menos costo de emision.
-     * Nota: sin inventario/ventas en el modelo actual, solo registramos la cancelación.
+     * PolÃ­tica: reembolsa precio pagado menos costo de emision.
+     * Nota: sin inventario/ventas en el modelo actual, solo registramos la cancelaciÃ³n.
      */
     public void cancelarEventoPorFraude(Evento evento) {
         if (evento == null) {
-            System.out.println("Evento inválido");
+            System.out.println("Evento invÃ¡lido");
             return;
         }
         evento.cancelar();
-        System.out.println("Reembolso a compradores: precio - costo de emisión ($" + costoFijoEmision + ")");
+        System.out.println("Reembolso a compradores: precio - costo de emisiÃ³n ($" + costoFijoEmision + ")");
     }
 
     /**
-     * Autoriza cancelación solicitada por organizador.
-     * Política: reembolsa solo precio base (tiquetera retiene cargos + emision).
+     * Autoriza cancelaciÃ³n solicitada por organizador.
+     * PolÃ­tica: reembolsa solo precio base (tiquetera retiene cargos + emision).
      */
     public void autorizarCancelacionSolicitada(Evento evento) {
         if (evento == null) {
-            System.out.println("Evento inválido");
+            System.out.println("Evento invÃ¡lido");
             return;
         }
         evento.cancelar();
-        System.out.println("Reembolso a compradores: solo precio base (tiquetera retiene cargos+emisión)");
+        System.out.println("Reembolso a compradores: solo precio base (tiquetera retiene cargos+emisiÃ³n)");
     }
 
     /**

@@ -41,7 +41,7 @@ public class PaqueteDeluxe extends Paquete {
 
     @Override
     public List<Tiquete> generarTiquetes() {
-        // Genera los tiquetes incluidos, marcándolos como tipo DELUXE para bloquear transferencia en Comprador
+        // Genera los tiquetes incluidos, marcï¿½ndolos como tipo DELUXE para bloquear transferencia en Comprador
         List<Tiquete> out = new ArrayList<>();
         for (ProductoVenta p : incluidos) {
             List<Tiquete> ts = p.generarTiquetes();

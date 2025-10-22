@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Paquete de entradas múltiples para un mismo evento/localidad (ej: palco para N personas).
+ * Paquete de entradas mï¿½ltiples para un mismo evento/localidad (ej: palco para N personas).
  */
 public class PaqueteGrupo extends Paquete {
     private final Evento evento;

@@ -15,7 +15,7 @@ public abstract class Usuario {
 
     /**
      * Constructor de Usuario.
-     * Requiere id, login y password no nulos/ni vacíos.
+     * Requiere id, login y password no nulos/ni vacÃ­os.
      */
     public Usuario(String id, String login, String password, String nombre, String correo) {
         if (id == null || id.trim().isEmpty()) throw new IllegalArgumentException("id obligatorio");
@@ -31,7 +31,7 @@ public abstract class Usuario {
     }
 
     /**
-     * Autentica al usuario verificando la contraseña.
+     * Autentica al usuario verificando la contraseÃ±a.
      */
     public boolean autenticar(String passwordPlano) {
         if (passwordPlano == null) return false;
@@ -39,19 +39,19 @@ public abstract class Usuario {
     }
 
     /**
-     * Cambia la contraseña validando la actual.
+     * Cambia la contraseÃ±a validando la actual.
      */
     public boolean cambiarPassword(String passwordActual, String passwordNueva) {
         if (!autenticar(passwordActual)) {
-            System.out.println("Contraseña actual incorrecta");
+            System.out.println("ContraseÃ±a actual incorrecta");
             return false;
         }
         if (passwordNueva == null || passwordNueva.length() < 4) {
-            System.out.println("La nueva contraseña debe tener al menos 4 caracteres");
+            System.out.println("La nueva contraseÃ±a debe tener al menos 4 caracteres");
             return false;
         }
         this.passwordHash = hashPassword(passwordNueva);
-        System.out.println("Contraseña actualizada correctamente");
+        System.out.println("ContraseÃ±a actualizada correctamente");
         return true;
     }
 
@@ -87,8 +87,8 @@ public abstract class Usuario {
     }
 
     /**
-     * Método simple de hash para contraseñas.
-     * NOTA: En producción usar BCrypt, Argon2 o similar.
+     * MÃ©todo simple de hash para contraseÃ±as.
+     * NOTA: En producciÃ³n usar BCrypt, Argon2 o similar.
      */
     private String hashPassword(String password) {
         return Integer.toString(password.hashCode());
@@ -105,7 +105,7 @@ public abstract class Usuario {
 
     public void setLogin(String nuevoLogin) {
         if (nuevoLogin == null || nuevoLogin.trim().isEmpty()) {
-            System.out.println("Login inválido");
+            System.out.println("Login invÃ¡lido");
             return;
         }
         this.login = nuevoLogin.trim();
