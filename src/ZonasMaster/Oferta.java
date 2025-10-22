@@ -1,8 +1,8 @@
 package ZonasMaster;
 
 /**
- * Representa una oferta de descuento para una localidad especÌfica
- * La oferta es v·lida durante una ventana de tiempo
+ * Representa una oferta de descuento para una localidad espec√≠fica
+ * La oferta es v√°lida durante una ventana de tiempo
  */
 public class Oferta {
     private String id;
@@ -21,7 +21,7 @@ public class Oferta {
     }
 
     /**
-     * Verifica si la oferta est· activa ahora
+     * Verifica si la oferta est√° activa ahora
      * @return true si la ventana de tiempo incluye el momento actual
      */
     public boolean estaActiva() {
@@ -29,8 +29,8 @@ public class Oferta {
     }
 
     /**
-     * Activa la oferta en la localidad si est· en la ventana de tiempo
-     * @return true si se activÛ exitosamente
+     * Activa la oferta en la localidad si est√° en la ventana de tiempo
+     * @return true si se activ√≥ exitosamente
      */
     public boolean activarSiVigente() {
         if (estaActiva()) {

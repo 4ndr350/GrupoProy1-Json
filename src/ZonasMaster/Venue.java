@@ -1,7 +1,7 @@
 package ZonasMaster;
 
 /**
- * Representa un lugar fÌsico donde se realizan eventos
+ * Representa un lugar f√≠sico donde se realizan eventos
  * (estadio, teatro, bar, discoteca, lote, etc.)
  */
 public class Venue {
@@ -22,7 +22,7 @@ public class Venue {
         this.ubicacion = ubicacion;
         this.capacidadMaxima = capacidadMaxima;
         this.restriccionesUso = restriccionesUso;
-        this.aprobado = false; // Por defecto no est· aprobado
+        this.aprobado = false; // Por defecto no est√° aprobado
     }
 
     /**
@@ -93,3 +93,4 @@ public class Venue {
                 '}';
     }
 }
+

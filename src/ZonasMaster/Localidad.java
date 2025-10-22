@@ -1,7 +1,7 @@
 package ZonasMaster;
 
 /**
- * Representa una secciÛn o zona dentro de un evento
+ * Representa una secci√≥n o zona dentro de un evento
  * (Ej: VIP, Platea, General, Gramilla, etc.)
  */
 public class Localidad {
@@ -48,7 +48,7 @@ public class Localidad {
     }
 
     /**
-     * Calcula el precio con descuento si est· activo
+     * Calcula el precio con descuento si est√° activo
      * @return precio final considerando descuento
      */
     public double precioConDescuento() {

@@ -1,38 +1,31 @@
 package Actores;
 
 /**
- * Representa una regla de cargo por servicio según el tipo de evento
- * El administrador define estas reglas para cada tipo de evento
+ * Regla de cargo por servicio según el tipo de evento.
+ * El administrador define estas reglas para cada tipo de evento.
  */
 public class CargoServicio {
-    // Atributos
     private String tipoEvento;   // MUSICAL, CULTURAL, DEPORTIVO, RELIGIOSO
     private double porcentaje;   // Porcentaje de cargo (ej: 10.0 para 10%)
 
-    /**
-     * Constructor de CargoServicio
-     */
     public CargoServicio(String tipoEvento, double porcentaje) {
-        this.tipoEvento = tipoEvento;
-        this.porcentaje = porcentaje;
+        this.tipoEvento = (tipoEvento == null) ? "" : tipoEvento.trim().toUpperCase();
+        setPorcentaje(porcentaje);
     }
 
     /**
-     * Calcula el cargo de servicio para un monto base
-     * @param montoBase precio base del tiquete
-     * @return monto del cargo de servicio
+     * Calcula el cargo de servicio para un monto base.
      */
     public double calcularCargo(double montoBase) {
         return montoBase * (porcentaje / 100.0);
     }
 
-    // Getters y Setters
     public String getTipoEvento() {
         return tipoEvento;
     }
 
     public void setTipoEvento(String tipoEvento) {
-        this.tipoEvento = tipoEvento;
+        this.tipoEvento = (tipoEvento == null) ? "" : tipoEvento.trim().toUpperCase();
     }
 
     public double getPorcentaje() {
@@ -40,11 +33,11 @@ public class CargoServicio {
     }
 
     public void setPorcentaje(double porcentaje) {
-        if (porcentaje >= 0 && porcentaje <= 100) {
-            this.porcentaje = porcentaje;
-        } else {
+        if (porcentaje < 0 || porcentaje > 100) {
             System.out.println("El porcentaje debe estar entre 0 y 100");
+            return;
         }
+        this.porcentaje = porcentaje;
     }
 
     @Override

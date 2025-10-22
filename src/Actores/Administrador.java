@@ -11,7 +11,6 @@ import java.util.List;
  * El administrador NO puede comprar tiquetes
  */
 public class Administrador extends Usuario {
-    // Atributos específicos
     private List<CargoServicio> reglasCargo;
     private double costoFijoEmision;
 
@@ -25,106 +24,106 @@ public class Administrador extends Usuario {
     }
 
     /**
-     * Define o actualiza el cargo por servicio para un tipo de evento
-     * @param tipo tipo de evento (MUSICAL, CULTURAL, DEPORTIVO, RELIGIOSO)
-     * @param porcentaje porcentaje de cargo (0-100)
+     * Define o actualiza el cargo por servicio para un tipo de evento.
+     * Normaliza el tipo a MAYUSCULAS para consistencia.
      */
     public void fijarCargoServicio(String tipo, double porcentaje) {
-        // Buscar si ya existe una regla para este tipo
+        if (tipo == null || tipo.trim().isEmpty()) {
+            System.out.println("Tipo de evento inválido");
+            return;
+        }
+        String tipoNorm = tipo.trim().toUpperCase();
+
         for (CargoServicio regla : reglasCargo) {
-            if (regla.getTipoEvento().equalsIgnoreCase(tipo)) {
+            if (regla.getTipoEvento().equalsIgnoreCase(tipoNorm)) {
                 regla.setPorcentaje(porcentaje);
-                System.out.println("Cargo actualizado: " + tipo + " = " + porcentaje + "%");
+                System.out.println("Cargo actualizado: " + tipoNorm + " = " + porcentaje + "%");
                 return;
             }
         }
-        
-        // Si no existe, crear nueva regla
-        CargoServicio nueva = new CargoServicio(tipo, porcentaje);
+
+        CargoServicio nueva = new CargoServicio(tipoNorm, porcentaje);
         reglasCargo.add(nueva);
-        System.out.println("Nuevo cargo creado: " + tipo + " = " + porcentaje + "%");
+        System.out.println("Nuevo cargo creado: " + tipoNorm + " = " + porcentaje + "%");
     }
 
     /**
-     * Define el costo fijo de emisión/impresión
-     * @param monto monto fijo por tiquete
+     * Define el costo fijo de emision/impresion por tiquete.
      */
     public void fijarCostoFijoEmision(double monto) {
-        if (monto >= 0) {
-            this.costoFijoEmision = monto;
-            System.out.println("Costo de emisión actualizado: $" + monto);
+        if (monto < 0) {
+            System.out.println("El costo fijo de emisión no puede ser negativo");
+            return;
         }
+        this.costoFijoEmision = monto;
+        System.out.println("Costo de emisión actualizado: $" + monto);
     }
 
     /**
-     * Aprueba un venue sugerido por un organizador
-     * @param venue el Venue a aprobar
+     * Aprueba un venue sugerido por un organizador si cumple validaciones básicas.
      */
     public void aprobarVenue(Venue venue) {
         if (venue == null) {
             System.out.println("Venue inválido");
             return;
         }
-
-        // TODO: Validar requisitos del venue
-        // venue.aprobar();
-        
-        System.out.println("Venue aprobado: " + venue.getNombre());
+        if (venue.getNombre() == null || venue.getNombre().trim().isEmpty()) {
+            System.out.println("El venue debe tener nombre");
+            return;
+        }
+        if (venue.getCapacidadMaxima() <= 0) {
+            System.out.println("Capacidad máxima inválida para el venue");
+            return;
+        }
+        venue.aprobar();
     }
 
     /**
-     * Cancela un evento por fraude
-     * Reembolsa: precio total - costo de emisión
-     * @param evento el evento a cancelar
+     * Cancela un evento por fraude.
+     * Política: reembolsa precio pagado menos costo de emision.
+     * Nota: sin inventario/ventas en el modelo actual, solo registramos la cancelación.
      */
     public void cancelarEventoPorFraude(Evento evento) {
         if (evento == null) {
             System.out.println("Evento inválido");
             return;
         }
-
-        // TODO: Implementar cancelación
-        // 1. Marcar evento como CANCELADO
-        // 2. Obtener todos los tiquetes vendidos
-        // 3. Para cada comprador: acreditar (precioTotal - costoEmision)
-
-        System.out.println("Evento cancelado por fraude: " + evento.getNombre());
-        System.out.println("Reembolsando: precio - emisión");
+        evento.cancelar();
+        System.out.println("Reembolso a compradores: precio - costo de emisión ($" + costoFijoEmision + ")");
     }
 
     /**
-     * Autoriza cancelación solicitada por organizador
-     * Reembolsa: solo precio base (sin cargos ni emisión)
-     * @param evento el evento a cancelar
+     * Autoriza cancelación solicitada por organizador.
+     * Política: reembolsa solo precio base (tiquetera retiene cargos + emision).
      */
     public void autorizarCancelacionSolicitada(Evento evento) {
         if (evento == null) {
             System.out.println("Evento inválido");
             return;
         }
-
-        // TODO: Implementar autorización
-        // 1. Validar solicitud del organizador
-        // 2. Marcar evento como CANCELADO
-        // 3. Para cada comprador: acreditar solo precio base
-        // 4. La tiquetera retiene (cargos + emisión)
-
-        System.out.println("Cancelación autorizada: " + evento.getNombre());
-        System.out.println("Reembolsando: solo precio base");
+        evento.cancelar();
+        System.out.println("Reembolso a compradores: solo precio base (tiquetera retiene cargos+emisión)");
     }
 
     /**
-     * Obtiene el porcentaje de cargo para un tipo de evento
-     * @param tipoEvento tipo de evento
-     * @return porcentaje de cargo
+     * Obtiene el porcentaje de cargo para un tipo de evento.
      */
     public double obtenerCargoServicio(String tipoEvento) {
+        if (tipoEvento == null) return 0.0;
         for (CargoServicio regla : reglasCargo) {
             if (regla.getTipoEvento().equalsIgnoreCase(tipoEvento)) {
                 return regla.getPorcentaje();
             }
         }
         return 0.0;
+    }
+
+    /**
+     * Calcula el cargo de servicio para un monto base dado un tipo de evento.
+     */
+    public double calcularCargoServicio(String tipoEvento, double montoBase) {
+        double pct = obtenerCargoServicio(tipoEvento);
+        return montoBase * (pct / 100.0);
     }
 
     // Getters
@@ -146,3 +145,4 @@ public class Administrador extends Usuario {
                 '}';
     }
 }
+
